@@ -1,0 +1,19 @@
+#pip install -r requirements.txt
+
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+langchain
+langchain-community
+langchain-groq
+langchain-huggingface
+langchain-postgres
+sentence-transformers
+pypdf
+pgvector
+python-dotenv
+streamlit
+requests
+python-multipart
+python-docx
