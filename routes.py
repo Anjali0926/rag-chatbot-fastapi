@@ -1,5 +1,7 @@
 from fastapi import APIRouter, UploadFile, File
 
+from chat_history import save_message
+
 import os
 
 import shutil #used to save the uploaded file
@@ -37,7 +39,26 @@ def upload_pdf(file: UploadFile = File(...)):
 )
 def chat(request: ChatRequest):
 
-    answer = ask_question(request.question)
+    #saving the user question
+
+    save_message(
+        request.session_id,
+        "user",
+        request.question
+    )
+
+    #ask chatbot
+    answer = ask_question(
+        question=request.question,
+        session_id=request.session_id
+        )
+
+    #2save the assistant answer
+    save_message(
+        request.session_id,
+        "assistant",
+        answer
+    )
 
     return ChatResponse(
         answer=answer

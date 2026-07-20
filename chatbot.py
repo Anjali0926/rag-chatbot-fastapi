@@ -6,6 +6,8 @@ from langchain_core.output_parsers import StrOutputParser
 
 from langchain_core.runnables import RunnablePassthrough
 
+from chat_history import get_chat_history
+
 from config import GROQ_API_KEY
 
 from vector_store import vector_store
@@ -13,7 +15,7 @@ from vector_store import vector_store
 #step1--- retriever
 
 retriever = vector_store.as_retriever(
-    search_kwargs={"k":3}
+    search_kwargs={"k":10}
 )
 
 #step2--- LLm
@@ -31,11 +33,14 @@ prompt = ChatPromptTemplate.from_template("""
     If the answer is not found in the context, reply exactly:
 
     "I don't know"
-
+   
+   Previous Conversation:
+   {history}
                                           
     Context:
-         {context} 
-    Question:                                       {question}
+    {context} 
+    Question:                                       
+    {question}
                                                      
     Answer:                                   
 """)
@@ -46,26 +51,40 @@ def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
 
 chain = (
-   {
-     "context": retriever | format_docs,
-    "question": RunnablePassthrough(),
-   }
-   |prompt
-   |llm
-   |parser
+    {
+        "context": (
+            lambda x: x["question"]
+        )
+        | retriever
+        | format_docs,
+
+        "question": lambda x: x["question"],
+
+        "history": lambda x: x["history"],
+    }
+    | prompt
+    | llm
+    | parser
 )
 
-def ask_question(question: str): #reusable function
-    return chain.invoke(question)
+def ask_question(question: str, session_id:str): #reusable function
+    history = get_chat_history(session_id)
 
-if __name__ == "__main__":
-    question = "What is FastAPI?"
-    answer = ask_question(question)
+    history_text = ""
 
-    print("\nQuestion: ")
-    print(question)
+    for chat in history:
 
-    print("\nAnswer: ")
-    print(answer)
+        if chat["role"] == "user":
+            history_text += f"User: {chat['message']}\n"
+
+        else:
+            history_text += f"Assistant: {chat['message']}\n"
+
+    return chain.invoke(
+        {
+            "question": question,
+            "history": history_text
+        }
+    )
 
 
