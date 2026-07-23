@@ -87,4 +87,3 @@ def ask_question(question: str, session_id:str): #reusable function
         }
     )
 
-

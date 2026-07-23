@@ -1,10 +1,9 @@
-from fastapi import APIRouter, UploadFile, File
+from fastapi import APIRouter, UploadFile, File, HTTPException
+import os
 
 from chat_history import save_message
 
-import os
-
-import shutil #used to save the uploaded file
+from documents import save_pdf, create_temp_pdf
 
 from rag import rag_pdf
 
@@ -19,19 +18,50 @@ router = APIRouter()
 @router.post("/upload")
 def upload_pdf(file: UploadFile = File(...)):
 
-    os.makedirs("uploads", exist_ok=True)
+    pdf_bytes = file.file.read()
 
-    file_path = f"uploads/{file.filename}"
+    document_id = save_pdf(
+        file.filename,
+        pdf_bytes
+    )
+    
+    temp_pdf = create_temp_pdf(document_id)
 
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+    try:
+          rag_pdf(temp_pdf)
 
-    rag_pdf(file_path)
+    finally:
+             if temp_pdf and os.path.exists(temp_pdf):
+                os.remove(temp_pdf)
 
     return {
-        "message": "PDF uploaded successfully."
+        "message": "PDF uploaded successfully.",
+        "document_id": document_id,
+        "file_name": file.filename
     }
 
+
+@router.post("/index/{file_name}")
+def reindex(file_name: str):
+
+    temp_pdf = create_temp_pdf(file_name)
+
+    if temp_pdf is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Document not found."
+        )
+
+    try:
+        rag_pdf(temp_pdf)
+
+    finally:
+             if temp_pdf and os.path.exists(temp_pdf):
+               os.remove(temp_pdf)
+
+    return {
+        "message": "Document indexed successfully."
+    }
 
 @router.post(
     "/chat",
@@ -63,4 +93,3 @@ def chat(request: ChatRequest):
     return ChatResponse(
         answer=answer
     )
-
