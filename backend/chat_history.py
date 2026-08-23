@@ -55,3 +55,33 @@ def get_chat_history(session_id: str):
         )
 
     return history
+
+def get_all_sessions():
+    db = SessionLocal()
+
+    result = db.execute(
+        text("""
+              SELECT 
+                 session_id,
+                 MIN(message) AS title,
+                 MAX(created_at) AS last_message
+              FROM chat_history
+              WHERE role = 'user'
+              GROUP BY session_id
+              ORDER BY last_message DESC;
+        """)
+    )
+
+    rows = result.fetchall()
+
+    db.close()
+
+    sessions = []
+
+    for row in rows:
+        sessions.append({
+            "session_id": row.session_id,
+            "title": row.title
+     })
+
+    return sessions

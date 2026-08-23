@@ -6,7 +6,7 @@ def save_pdf(file_name:str, pdf_data:bytes):
 
     db = SessionLocal()
 
-    db.execute(
+    result = db.execute(
 
         text("""
           INSERT INTO pdf_documents
@@ -28,7 +28,7 @@ def save_pdf(file_name:str, pdf_data:bytes):
 
     db.commit()
 
-    db.close
+    db.close()
 
     return document_id
 
