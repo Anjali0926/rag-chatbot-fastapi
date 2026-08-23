@@ -1,6 +1,3 @@
-Yes. Your README is now outdated because your project has changed from a **Streamlit-only RAG chatbot** into a **FastAPI backend + React/Tailwind frontend + employee CRUD chatbot**.
-
-Here is an updated README that matches your current project. It also removes the old `streamlit_app.py`-focused instructions and includes the **Qwen model**, **employee handbook Q&A**, **chatbot CRUD operations**, and your new folder structure.
 
 # 🤖 AI-Powered RAG Chatbot with Employee Management
 
