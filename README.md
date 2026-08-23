@@ -1,78 +1,163 @@
-# 🤖 AI-Powered RAG Chatbot
+Yes. Your README is now outdated because your project has changed from a **Streamlit-only RAG chatbot** into a **FastAPI backend + React/Tailwind frontend + employee CRUD chatbot**.
 
-An AI-powered Retrieval-Augmented Generation (RAG) chatbot built using **FastAPI**, **LangChain**, **PostgreSQL (pgvector)**, **Hugging Face Embeddings**, **Groq LLM**, and **Streamlit**. The chatbot allows users to upload PDF documents and ask questions, returning context-aware answers using semantic search and Large Language Models (LLMs).
+Here is an updated README that matches your current project. It also removes the old `streamlit_app.py`-focused instructions and includes the **Qwen model**, **employee handbook Q&A**, **chatbot CRUD operations**, and your new folder structure.
 
----
+# 🤖 AI-Powered RAG Chatbot with Employee Management
 
-## 🚀 Features
+An AI-powered **Retrieval-Augmented Generation (RAG) chatbot** built using **FastAPI, React, Tailwind CSS, PostgreSQL, pgvector, LangChain, Hugging Face Embeddings, and Groq**.
 
-- 📄 Upload PDF documents
-- ✂️ Automatic text extraction and chunking
-- 🔎 Semantic search using vector embeddings
-- 🗄️ PostgreSQL with pgvector for vector storage
-- 🤖 AI-powered responses using Groq LLM
-- ⚡ FastAPI backend with REST APIs
-- 💻 Streamlit-based user interface
-- 🔒 Secure API key management using `.env`
+The chatbot is designed to answer questions based on an **Employee Handbook** and also perform **employee CRUD operations through a chatbot interface**.
 
 ---
 
-# 🛠️ Tech Stack
+## Features
 
-| Category | Technologies |
-|----------|--------------|
-| Programming | Python |
-| Backend | FastAPI |
-| Database | PostgreSQL, pgvector |
-| AI Framework | LangChain |
-| Embedding Model | Hugging Face |
-| LLM | Groq |
-| Frontend | Streamlit |
-| Environment | python-dotenv |
+### RAG Chatbot
+
+* Upload and process PDF documents
+* Extract text from PDF documents
+* Split documents into smaller chunks
+* Generate vector embeddings
+* Store embeddings in PostgreSQL using pgvector
+* Perform semantic similarity search
+* Retrieve relevant document content
+* Generate context-aware answers using Groq LLM
+
+###  Employee Management
+
+The chatbot can perform employee-related operations through natural language:
+
+* Create employee records
+* Retrieve employee information
+* Update employee information
+* Delete employee records
+* Query employee data through the chatbot
+
+###  Chatbot Interface
+
+* Interactive chatbot widget
+* Chat history
+* Session-based conversations
+* Employee queries through natural language
+* Employee handbook question answering
+
+###  Frontend
+
+* React
+* Tailwind CSS
+* Vite
+* Responsive UI
+* Chatbot widget
+* PDF upload interface
+* Employee management interface
 
 ---
 
-# 📂 Project Structure
+#  Tech Stack
 
-```
-rag-chatbot-fastapi/
+| Category              | Technologies           |
+| --------------------- | ---------------------- |
+| Programming Language  | Python, JavaScript     |
+| Backend               | FastAPI                |
+| Frontend              | React                  |
+| Styling               | Tailwind CSS           |
+| Build Tool            | Vite                   |
+| Database              | PostgreSQL             |
+| Vector Database       | pgvector               |
+| AI Framework          | LangChain              |
+| Embeddings            | Hugging Face           |
+| Embedding Model       | BAAI/bge-small-en-v1.5 |
+| LLM                   | Groq                   |
+| LLM Model             | Qwen 3.6 27B           |
+| PDF Processing        | PyPDF                  |
+| ORM / Database Access | SQLAlchemy             |
+| Environment Variables | python-dotenv          |
+
+---
+
+#  Project Structure
+
+```text
+RAG_project/
 │
-├── AI_chatbot.py
-├── chatbot.py
-├── config.py
-├── database.py
-├── main.py
-├── rag.py
-├── routes.py
-├── schemas.py
-├── streamlit_app.py
-├── vector_store.py
-├── requirements.txt
+├── backend/
+│   │
+│   ├── agents/
+│   │   ├── agent.py
+│   │   └── tools.py
+│   │
+│   ├── main.py
+│   ├── database.py
+│   ├── documents.py
+│   ├── rag.py
+│   ├── vector_store.py
+│   ├── chatbot.py
+│   ├── chat_history.py
+│   ├── employee.py
+│   ├── excel_upload.py
+│   ├── routes.py
+│   ├── schemas.py
+│   ├── config.py
+│   ├── startup.py
+│   ├── test_agent.py
+│   ├── requirements.txt
+│   └── uploads/
+│
+├── frontend/
+│   │
+│   ├── public/
+│   │
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── ChatBot.jsx
+│   │   │   ├── ChatInput.jsx
+│   │   │   ├── ChatMessage.jsx
+│   │   │   ├── ChatWidget.jsx
+│   │   │   ├── Features.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── Header.jsx
+│   │   │   ├── Hero.jsx
+│   │   │   ├── Sidebar.jsx
+│   │   │   └── UploadPDF.jsx
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── EmployeeManagement.jsx
+│   │   │   └── Home.jsx
+│   │   │
+│   │   ├── App.jsx
+│   │   ├── App.css
+│   │   ├── index.css
+│   │   └── main.jsx
+│   │
+│   ├── package.json
+│   ├── package-lock.json
+│   └── vite.config.js
+│
 ├── .gitignore
 └── README.md
 ```
 
 ---
 
-# ⚙️ Installation
+#  Installation
 
-## 1️⃣ Clone the repository
+## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Anjali0926/rag-chatbot-fastapi.git
+git clone https://github.com/Anjali0926/rag_chatbot.git
 
-cd rag-chatbot-fastapi
+cd rag_chatbot
 ```
 
 ---
 
-## 2️⃣ Create a virtual environment
+#  Backend Setup
+
+## 2. Create a Virtual Environment
 
 ```bash
 python -m venv venv
 ```
-
-Activate the environment
 
 ### Windows
 
@@ -88,7 +173,15 @@ source venv/bin/activate
 
 ---
 
-## 3️⃣ Install dependencies
+## 3. Install Backend Dependencies
+
+Navigate to the backend folder:
+
+```bash
+cd backend
+```
+
+Install the required packages:
 
 ```bash
 pip install -r requirements.txt
@@ -96,119 +189,308 @@ pip install -r requirements.txt
 
 ---
 
-## 4️⃣ Configure Environment Variables
+#  Environment Variables
 
-Create a `.env` file.
+Create a `.env` file in the backend directory.
 
 ```env
 DATABASE_URL=your_postgresql_database_url
 GROQ_API_KEY=your_groq_api_key
+MODEL_NAME=qwen/qwen3.6-27b
 ```
+
+Do **not** commit the `.env` file to GitHub.
 
 ---
 
-# ▶️ Run the Backend
+#  PostgreSQL and pgvector
+
+The project uses PostgreSQL with the **pgvector extension** for storing and searching vector embeddings.
+
+The RAG pipeline stores:
+
+* Document chunks
+* Vector embeddings
+* Document metadata
+
+The original PDF files can also be stored in PostgreSQL through the `pdf_documents` table.
+
+---
+
+#  Run the Backend
+
+From the `backend` directory:
 
 ```bash
 uvicorn main:app --reload
 ```
 
-FastAPI documentation:
+The FastAPI backend will run at:
 
+```text
+http://127.0.0.1:8000
 ```
+
+FastAPI Swagger documentation:
+
+```text
 http://127.0.0.1:8000/docs
 ```
 
 ---
 
-# ▶️ Run the Frontend
+#  Frontend Setup
+
+Open another terminal and navigate to the frontend:
 
 ```bash
-streamlit run streamlit_app.py
+cd frontend
 ```
 
----
+Install dependencies:
 
-# 🔄 Application Workflow
+```bash
+npm install
+```
+
+Start the React development server:
+
+```bash
+npm run dev
+```
+
+The frontend will normally be available at:
 
 ```text
-Upload PDF
-      │
-      ▼
-Extract Text
-      │
-      ▼
-Split into Chunks
-      │
-      ▼
-Generate Embeddings
-(Hugging Face)
-      │
-      ▼
-Store in PostgreSQL (pgvector)
-      │
-      ▼
-User Question
-      │
-      ▼
-Generate Question Embedding
-      │
-      ▼
-Semantic Similarity Search
-      │
-      ▼
-Retrieve Relevant Chunks
-      │
-      ▼
-Groq LLM
-      │
-      ▼
-AI Generated Answer
+http://localhost:5173
 ```
 
 ---
 
-# 📌 API Endpoints
+#  RAG Application Workflow
 
-| Method | Endpoint | Description |
-|---------|----------|-------------|
-| POST | `/upload` | Upload a PDF document |
-| POST | `/chat` | Ask questions about uploaded documents |
+```text
+                PDF Document
+                     │
+                     ▼
+                Upload PDF
+                     │
+                     ▼
+              Extract PDF Text
+                     │
+                     ▼
+             Split into Chunks
+                     │
+                     ▼
+          Generate Embeddings
+          (Hugging Face Model)
+                     │
+                     ▼
+          Store in PostgreSQL
+                + pgvector
+                     │
+                     │
+        ─────────────┴─────────────
+                     │
+               User Question
+                     │
+                     ▼
+          Generate Question
+              Embedding
+                     │
+                     ▼
+          Similarity Search
+              in pgvector
+                     │
+                     ▼
+          Retrieve Relevant
+               Chunks
+                     │
+                     ▼
+              Qwen LLM
+               via Groq
+                     │
+                     ▼
+             Final Answer
+```
 
 ---
 
-# 💡 Key Concepts Used
+#  Employee Chatbot Workflow
 
-- Retrieval-Augmented Generation (RAG)
-- Large Language Models (LLMs)
-- Vector Embeddings
-- Semantic Search
-- Prompt Engineering
-- FastAPI REST APIs
-- PostgreSQL with pgvector
-- LangChain
-- Document Chunking
+The chatbot can also interact with employee data using natural language.
+
+```text
+User
+ │
+ ▼
+Chatbot Widget
+ │
+ ▼
+Understand User Request
+ │
+ ├── Employee Handbook Question
+ │          │
+ │          ▼
+ │       RAG Search
+ │          │
+ │          ▼
+ │       Qwen LLM
+ │
+ └── Employee Operation
+            │
+            ▼
+        CRUD Tool
+            │
+            ├── Create Employee
+            ├── Get Employee
+            ├── Update Employee
+            └── Delete Employee
+            │
+            ▼
+        PostgreSQL
+            │
+            ▼
+        Chatbot Response
+```
 
 ---
 
-# 🔮 Future Improvements
+#  API Endpoints
 
-- Support DOCX and TXT files
-- Conversation memory
-- Multi-document search
-- Authentication and user accounts
-- Docker deployment
-- Cloud deployment (AWS/Azure)
-- Streaming AI responses
+The FastAPI backend provides endpoints for document processing, chatbot interaction, employee management, and conversation handling.
+
+| Method | Endpoint                | Purpose                            |
+| ------ | ----------------------- | ---------------------------------- |
+| POST   | `/upload`               | Upload and process a PDF           |
+| POST   | `/chat`                 | Ask a question through the chatbot |
+| GET    | `/history/{session_id}` | Retrieve conversation history      |
+| GET    | `/sessions`             | Retrieve available chat sessions   |
+| GET    | `/employees`            | Retrieve employee records          |
+| POST   | Employee CRUD endpoints | Manage employee records            |
+
+> The exact employee endpoint names can be viewed through the FastAPI Swagger documentation at `/docs`.
 
 ---
 
-# 👩‍💻 Author
+#  AI and RAG Concepts Used
+
+This project demonstrates several concepts in Generative AI and RAG:
+
+* Retrieval-Augmented Generation
+* Large Language Models
+* Vector Embeddings
+* Semantic Search
+* Document Chunking
+* Prompt Engineering
+* Vector Databases
+* LangChain
+* Tool Calling
+* AI Agents
+* Conversation Memory
+* PostgreSQL
+* pgvector
+
+---
+
+# 📄 Document Processing
+
+The application processes PDF documents through the following pipeline:
+
+```text
+PDF
+ ↓
+PyPDFLoader
+ ↓
+Text Extraction
+ ↓
+RecursiveCharacterTextSplitter
+ ↓
+Document Chunks
+ ↓
+Hugging Face Embeddings
+ ↓
+PostgreSQL + pgvector
+```
+
+Once a document has been indexed, its embeddings can be reused for future chatbot queries without regenerating them every time the application starts.
+
+---
+
+#  Employee CRUD Through Chatbot
+
+Instead of manually performing every employee operation through a traditional form, the chatbot can understand natural-language requests.
+
+For example:
+
+```text
+Create an employee named Rahul with employee ID EMP101.
+```
+
+or:
+
+```text
+Show me the employee with ID EMP101.
+```
+
+or:
+
+```text
+Update Rahul's department to IT.
+```
+
+or:
+
+```text
+Delete employee EMP101.
+```
+
+The chatbot uses backend tools to perform the corresponding database operation.
+
+---
+
+#  Security
+
+Sensitive configuration values are stored in environment variables.
+
+Example:
+
+```env
+GROQ_API_KEY=your_api_key
+DATABASE_URL=your_database_url
+```
+
+The `.env` file is excluded from Git using `.gitignore`.
+
+Never expose API keys or database credentials in source code.
+
+---
+
+#  Future Improvements
+
+* Multi-document management
+* DOCX and TXT document support
+* Authentication and authorization
+* Improved conversation memory
+* Streaming AI responses
+* Advanced multi-agent workflows
+* Docker deployment
+* Cloud deployment
+* Production database configuration
+* Better document source citations
+* Role-based employee access
+
+---
+
+#  Author
 
 **Anjali Pulusu**
 
-- GitHub: https://github.com/Anjali0926
+GitHub:
+[https://github.com/Anjali0926](https://github.com/Anjali0926)
 
 ---
 
-## ⭐ If you like this project, consider giving it a Star!
+##  Project
+
+If you find this project useful, consider giving the repository a ⭐ on GitHub.
